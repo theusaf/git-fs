@@ -1,0 +1,26 @@
+{
+  "name": "git-fs",
+  "version": "0.0.1",
+  "description": "A NodeJS Application to use Git as a filesystem",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theusaf/git-fs.git"
+  },
+  "keywords": [
+    "git",
+    "fs",
+    "filesystem",
+    "application",
+    "gui"
+  ],
+  "author": "theusaf",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/theusaf/git-fs/issues"
+  },
+  "homepage": "https://github.com/theusaf/git-fs#readme"
+}
