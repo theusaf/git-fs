@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/theusaf/git-fs/issues"
   },
-  "homepage": "https://github.com/theusaf/git-fs#readme"
+  "homepage": "https://github.com/theusaf/git-fs#readme",
+  "dependencies": {
+    "@nodegui/nodegui": "^0.5.1"
+  }
 }
