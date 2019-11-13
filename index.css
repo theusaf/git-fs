@@ -1,7 +1,8 @@
 #rootView{
-  /*max-width: 1280;
+  max-width: 1280;
   width: 1280;
-  max-height: 800;*/
+  height: 800;
+  max-height: 800;
   display: flex;
   align-items: 'center';
   justify-content: 'center';
@@ -12,6 +13,6 @@
   width: 600;
 }
 #LoadingText{
-  flex: 1;
-  background: red;
+  position: absolute;
+  margin-bottom: 50;
 }
