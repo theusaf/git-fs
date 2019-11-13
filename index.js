@@ -35,7 +35,7 @@ win.center();
 global.win = win;
 
 // Detect Stuff
-isGitInstalled().then(res=>{
+isGitInstalled(options.git).then(res=>{
   // Git is installed. Continue loading
   startupLoad();
 }).catch(err=>{
