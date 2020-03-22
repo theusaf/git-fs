@@ -13,6 +13,7 @@ const isGitInstalled = require(path.join(__dirname,"src/DetectGit.js"));
 const GitHandler = require(path.join(__dirname,"src/GitHandler.js"));
 const options = JSON.parse(fs.readFileSync(path.join(__dirname,"data/options.json"),"utf8"));
 const screens = require(path.join(__dirname,"screens.js"));
+const parts = require(path.join(__dirname,"parts.js"));
 
 const __ = screens.load();
 
@@ -40,5 +41,5 @@ function startupExit(reason){
 }
 function startupLoad(){
   progress.setValue(100);
-  screens.main(win,screens);
+  screens.main(win,screens,parts);
 }
