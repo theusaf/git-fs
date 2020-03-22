@@ -9,35 +9,15 @@ const fs = require("fs");
 const {QProgressBar, QLabel, FlexLayout, QWidget, QMainWindow, QIcon, QMessageBox, ButtonRole, QPushButton} = require("@nodegui/nodegui");
 
 // app modules
-const showMain = require(path.join(__dirname,"src/show-main-screen.js"));
 const isGitInstalled = require(path.join(__dirname,"src/DetectGit.js"));
 const GitHandler = require(path.join(__dirname,"src/GitHandler.js"));
 const options = JSON.parse(fs.readFileSync(path.join(__dirname,"data/options.json"),"utf8"));
+const screens = require(path.join(__dirname,"screens.js"));
 
-// Setup
-const icon = new QIcon(path.join(__dirname,"data/image/icon.png"));
-const document = new QWidget();
-document.setLayout(new FlexLayout());
-document.setObjectName("rootView");
-// Create two widgets - one label and one view
-const label = new QLabel();
-label.setText("Loading...");
-label.setObjectName("LoadingText");
-const progress = new QProgressBar();
-progress.setObjectName("LoadingBar");
-// Now tell rootView layout that the label and the other view are its children
-document.layout.addWidget(label);
-document.layout.addWidget(progress);
-// Tell FlexLayout how you want children of rootView to be poisitioned
-document.setStyleSheet(fs.readFileSync(path.join(__dirname,"index.css"),"utf8"));
-const win = new QMainWindow();
-win.setWindowIcon(icon);
-win.setCentralWidget(document);
-win.show();
-win.resize(1280,800);
-document.resize(1280,800);
-win.center();
-global.win = win;
+const __ = screens.load();
+
+global.win = __[0];
+const progress = __[1];
 
 // Detect Stuff
 isGitInstalled(options.git).then(res=>{
@@ -61,6 +41,6 @@ function startupExit(reason){
 function startupLoad(){
   progress.setValue(100);
   setTimeout(function(){
-    showMain(win);
+    screens.main(win);
   },2000);
 }
