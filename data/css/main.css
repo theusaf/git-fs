@@ -1,6 +1,7 @@
 html {
   height: 100vh;
   max-height: 100vh;
+  overflow: hidden;
 }
 body {
   background: #888;
@@ -12,17 +13,21 @@ body {
   flex: 25%;
   background: #444;
   height: 100%;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  white-space: nowrap;
 }
 #main {
   flex: 75%;
   background: #777;
   height: 100%;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  white-space: nowrap;
 }
 #content-wrapper {
   display: flex;
-  height: 100%;
+  height: calc(100% - 2rem);
 }
 #drag-resize {
   width: 0px;
@@ -33,4 +38,19 @@ body {
 }
 #drag-resize:hover {
   cursor: col-resize;
+}
+#footer {
+  background: #555;
+  height: 2.3rem;
+  border-top: 1px solid black;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.title {
+  color: #ddd;
+  text-align: center;
+  font-family: 'Helvetica', sans-serif;
+  padding-bottom: 3px;
+  border-bottom: 3px solid #333;
+  font-weight: 500;
 }
