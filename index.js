@@ -2,17 +2,12 @@
 const {spawn,exec} = require("child_process");
 const path = require("path");
 const fs = require("fs");
+const electron = require("electron");
 
 // app modules
 const isGitInstalled = require(path.join(__dirname,"src/DetectGit.js"));
 const GitHandler = require(path.join(__dirname,"src/GitHandler.js"));
 const options = JSON.parse(fs.readFileSync(path.join(__dirname,"data/options.json"),"utf8"));
-const screens = require(path.join(__dirname,"screens.js"));
-const parts = require(path.join(__dirname,"parts.js"));
-
-const __ = screens.load();
-
-global.win = __[0];
 
 // Detect Stuff
 isGitInstalled(options.git).then(res=>{
@@ -27,4 +22,11 @@ isGitInstalled(options.git).then(res=>{
 function startupExit(reason){
 }
 function startupLoad(){
+  electron.app.whenReady().then(()=>{
+    const window = new electron.BrowserWindow({
+      width: 1280,
+      height: 800
+    });
+    window.loadFile(path.join(__dirname,"screens/loading.html"));
+  });
 }
