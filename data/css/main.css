@@ -1,0 +1,36 @@
+html {
+  height: 100vh;
+  max-height: 100vh;
+}
+body {
+  background: #888;
+  margin: 0px;
+  height: calc(100vh - 0.1rem);
+  max-height: calc(100vh - 0.1rem);
+}
+#sidebar {
+  flex: 25%;
+  background: #444;
+  height: 100%;
+  overflow: auto;
+}
+#main {
+  flex: 75%;
+  background: #777;
+  height: 100%;
+  overflow: auto;
+}
+#content-wrapper {
+  display: flex;
+  height: 100%;
+}
+#drag-resize {
+  width: 0px;
+  height: 100%;
+  flex: 0;
+  border: 3px solid black;
+  box-sizing: border-box;
+}
+#drag-resize:hover {
+  cursor: col-resize;
+}
