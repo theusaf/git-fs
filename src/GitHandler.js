@@ -12,7 +12,7 @@ module.exports = {
           console.log(dirs);
           res(dirs);
         }catch(err){
-          rej([]);
+          res([]);
         }
       });
     });

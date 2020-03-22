@@ -30,9 +30,7 @@ window.addEventListener('load',()=>{
     });
   }else if(pageid.content == "main"){
     GitHandler.getRepos().then(repos=>{
-      
-    }).catch(err=>{
-      // no repos
+
     });
   }
 });
