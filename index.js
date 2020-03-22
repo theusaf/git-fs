@@ -1,6 +1,6 @@
-if(!process.versions.qode){
+/*if(!process.versions.qode){
   throw "Err! Started using node, please use npm start instead";
-}
+}*/
 
 // Modules
 const {spawn,exec} = require("child_process");

@@ -25,6 +25,6 @@
   },
   "homepage": "https://github.com/theusaf/git-fs#readme",
   "dependencies": {
-    "@nodegui/nodegui": "^0.5.1"
+    "@nodegui/nodegui": "^0.16.1"
   }
 }
