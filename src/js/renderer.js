@@ -11,7 +11,8 @@ const options = JSON.parse(fs.readFileSync(path.join(__dirname,"../../data/optio
 */
 window.addEventListener('load',()=>{
   const loadText = document.getElementById("loading-inf");
-  if(loadText){
+  const pageid = document.querySelector('[name="gitfs-screen-id"]');
+  if(pageid.content == "load"){
     window.ipc = ipc;
     const loadBar = document.getElementById("loading-prg");
     const int = (loadBar.style.width.match(/\d+/gm) && loadBar.style.width.match(/\d+/gm)) || 0;
@@ -26,6 +27,12 @@ window.addEventListener('load',()=>{
       setTimeout(()=>{
         window.location = "https://git-scm.com/downloads";
       },3000);
+    });
+  }else if(pageid.content == "main"){
+    GitHandler.getRepos().then(repos=>{
+      
+    }).catch(err=>{
+      // no repos
     });
   }
 });
