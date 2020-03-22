@@ -1,0 +1,28 @@
+#document {
+  max-width: 1280;
+  width: 1280;
+  height: 800;
+  max-height: 800;
+  background: "#AAAAAA";
+  margin: 0px;
+  padding: 0px;
+  display: flex;
+}
+#main {
+  flex: 70%;
+  border: 1px solid black;
+  background-color: "#999";
+  margin: 0px;
+  padding: 0px;
+  width: 896px;
+  max-width: 896px;
+}
+#sidebar {
+  flex: 30%;
+  margin: 0px;
+  padding: 0px;
+  width: 384px;
+  max-width: 384px;
+  background-color: "#ABABAB";
+  border: 1px solid white;
+}

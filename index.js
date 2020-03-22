@@ -40,7 +40,5 @@ function startupExit(reason){
 }
 function startupLoad(){
   progress.setValue(100);
-  setTimeout(function(){
-    screens.main(win);
-  },2000);
+  screens.main(win,screens);
 }

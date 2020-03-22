@@ -19,12 +19,12 @@ module.exports = function(){
   document.layout.addWidget(label);
   document.layout.addWidget(progress);
   // Tell FlexLayout how you want children of rootView to be poisitioned
-  document.setStyleSheet(fs.readFileSync(path.join(__dirname,"../index.css"),"utf8"));
+  document.setStyleSheet(fs.readFileSync(path.join(__dirname,"../styles/index.css"),"utf8"));
   win.setWindowIcon(icon);
   win.setCentralWidget(document);
   win.show();
   win.resize(1280,800);
   document.resize(1280,800);
   win.center();
-  return [win,progress]
-}
+  return [win,progress];
+};

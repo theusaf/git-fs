@@ -1,7 +1,22 @@
 const _ = require("@nodegui/nodegui");
-module.exports = function(win){
-  const layout = new _.FlexLayout();
+const fs = require("fs");
+const path = require("path");
+module.exports = function(win,screens){
+  const layout = new _.QBoxLayout(0);
   const doc = new _.QWidget();
   doc.setObjectName("mainView");
   win.setCentralWidget(doc);
-}
+  const sidebar = new _.QBoxLayout(2);
+  const mainView = new _.FlexLayout();
+  const sidebarDiv = new _.QWidget();
+  const mainDiv = new _.QWidget();
+  sidebarDiv.setLayout(sidebar);
+  mainDiv.setLayout(mainView);
+  doc.setLayout(layout);
+  doc.layout.addWidget(sidebarDiv);
+  doc.layout.addWidget(mainDiv);
+  sidebarDiv.setObjectName("sidebar");
+  mainDiv.setObjectName("main");
+  doc.setObjectName("document");
+  doc.setStyleSheet(fs.readFileSync(path.join(__dirname,"../styles/main.css"),"utf8"));
+};
