@@ -1,0 +1,30 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+body > div {
+  flex: 1;
+  align-items: center;
+  text-align: center;
+  display: flex;
+}
+p {
+  font-size: 3rem;
+  font-family: "Helvetica", sans-serif;
+}
+span {
+  width: 80%;
+  height: 1rem;
+  border: 1px solid black;
+  border-radius: 1rem;
+  position: absolute;
+  top: calc(50% + 3.5rem);
+}
+span > div {
+  width: 0px;
+  height: 1rem;
+  border-radius: 1rem;
+  background: #88f;
+}
