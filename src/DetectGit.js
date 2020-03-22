@@ -2,7 +2,7 @@ const {spawn} = require("child_process");
 
 module.exports = function(git){
   return new Promise((resolve,reject)=>{
-    const finder = spawn(git ? git : "git",["--version"]);
+    const finder = spawn(git || "git",["--version"]);
     finder.stderr.on("data",err=>{
       console.log("Error found #1");
       reject(err);

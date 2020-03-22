@@ -15,4 +15,5 @@
 #LoadingText{
   position: absolute;
   margin-bottom: 50;
+  font-size: 30px;
 }
