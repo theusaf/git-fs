@@ -5,6 +5,7 @@ const path = require("path");
 const isGitInstalled = require(path.join(__dirname,"../DetectGit.js"));
 const GitHandler = require(path.join(__dirname,"../GitHandler.js"));
 const options = JSON.parse(fs.readFileSync(path.join(__dirname,"../../data/options.json"),"utf8"));
+const loadPart = require(path.join(__dirname,"parts.js"));
 
 /* Load Stages:
 1. check for git.
@@ -29,13 +30,17 @@ window.addEventListener('load',()=>{
       },3000);
     });
   }else if(pageid.content == "main"){
-    GitHandler.getRepos().then(repos=>{
+    const frame = document.getElementById("mainscreen");
+    GitHandler.getRepos().then(async repos=>{
       if(repos.length && !options.repository){
         // select repo
+        frame.innerHTML = await loadPart("select-repo");
       }else if(repos.length && options.repository){
         // load repo
+        frame.innerHTML = await loadPart("load-repo");
       }else{
         // create new repo
+        frame.innerHTML = await loadPart("gen-repo");
       }
     });
   }
