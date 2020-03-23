@@ -25,7 +25,6 @@
   },
   "homepage": "https://github.com/theusaf/git-fs#readme",
   "dependencies": {
-    "appjs-darwin": "0.0.19",
     "open": "^7.0.3"
   },
   "devDependencies": {
