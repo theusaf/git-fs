@@ -144,5 +144,17 @@ module.exports = {
   },
   initiateRepo: (git,repo,remote)=>{
     const repoPath = path.join(__dirname,"../data/repos/",repo);
+    return new Promise((res,rej)=>{
+      const initiator = spawn(git||"git",["init"],{cwd: repoPath});
+      initiator.on("close",()=>{
+        const remoter = spawn(git||"git",["remote","add","origin",remote],{cwd: repoPath});
+        remoter.on("close",()=>{
+          res();
+        });
+        remoter.on("error",err=>{
+          rej(err);
+        });
+      });
+    });
   }
 }
