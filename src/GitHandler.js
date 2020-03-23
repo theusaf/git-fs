@@ -77,6 +77,16 @@ module.exports = {
   },
   loadFile: (git,repo,file)=>{ // load a single file
     const repoPath = path.join(__dirname,"../data/repos/",repo);
+    return new Promise((res,rej)=>{
+      const checkout = spawn(git||"git",["checkout",file],{cwd:repoPath});
+      checkout.on("close",()=>{
+        module.exports.showFile(git,repo,file).then(()=>{
+          res();
+        }).catch(e=>{
+          rej(e);
+        });
+      });
+    });
   },
   uploadChanges: async (git,repo,userin)=>{ // push
     const repoPath = path.join(__dirname,"../data/repos/",repo);
@@ -110,8 +120,24 @@ module.exports = {
   },
   hideFile: (git,repo,file)=>{ // removes and adds "assume unchanged"
     const repoPath = path.join(__dirname,"../data/repos/",repo);
+    return new Promise((res,rej)=>{
+      if(fs.existsSync(path.join(repoPath,file))){
+        fs.unlink(path.join(repoPath,file),(err)=>{
+          if(err){
+            return rej(err);;
+          }
+          // assume unchanged.
+          const assumer = spawn(git||"git",["update-index","--assume-unchanged",file],{cwd:repoPath});
+          assumer.on("close",()=>{res();});
+        });
+      }
+    });
   },
   showFile: (git,repo,file)=>{ // removes "assume unchanged" status
     const repoPath = path.join(__dirname,"../data/repos/",repo);
+    return new Promise((res,rej)=>{
+      const unassumer = spawn(git||"git",["update-index","--no-assume-unchanged",file],{cwd:repoPath});
+      unassumer.on("close",()=>{res();});
+    });
   }
 }
