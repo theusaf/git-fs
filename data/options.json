@@ -2,5 +2,6 @@
   "git": "git",
   "darkmode": false,
   "repository": null,
-  "largefiles": false
+  "largefiles": false,
+  "removefiles": true
 }
