@@ -30,7 +30,13 @@ window.addEventListener('load',()=>{
     });
   }else if(pageid.content == "main"){
     GitHandler.getRepos().then(repos=>{
-
+      if(repos.length && !options.repository){
+        // select repo
+      }else if(repos.length && options.repository){
+        // load repo
+      }else{
+        // create new repo
+      }
     });
   }
 });

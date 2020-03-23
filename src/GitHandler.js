@@ -4,12 +4,14 @@ const {spawn} = require("child_process");
 module.exports = {
   getRepos: ()=>{
     return new Promise((res,rej)=>{
-      fs.readdir(path.join(__dirname,"../data/repos"),{withFileTypes:true},files=>{
+      fs.readdir(path.join(__dirname,"../data/repos"),{withFileTypes:true},(err,files)=>{
+        if(err){
+          rej(err);
+        }
         try{
           const dirs = Array.from(files).filter(item=>{
-            return item.isDirectory();
+            return item.isDirectory() && fs.existsSync(path.join(__dirname,"../data/repos",item.name,".git"));
           });
-          console.log(dirs);
           res(dirs);
         }catch(err){
           res([]);
@@ -17,7 +19,7 @@ module.exports = {
       });
     });
   },
-  fetchChanges: async (git,repo,passcb)=>{
+  fetchChanges: (git,repo,passcb)=>{
     const repoPath = path.join(__dirname,"../data/repos/",repo);
     return new Promise((res,rej)=>{
       if(!fs.existsSync(path.join(__dirname,"../data/repos/",repo))){
@@ -44,7 +46,7 @@ module.exports = {
             toDate = false;
           }
         });
-        changes.on("close",()=>{
+        changes.on("close",async ()=>{
           if(toDate){
             // commit any changes
             if(inf.length){
@@ -63,7 +65,7 @@ module.exports = {
           }else{
             // "pull" - checks out all changed files, removes them and 'hides' them
             for(let news of inf){
-              await module.exports.loadFile(git,repo,news).then(()=>{
+              await module.exports.loadFile(git,repo,news).then(async ()=>{
                 await module.exports.hideFile(git,repo,news);
               });
             }
@@ -97,7 +99,7 @@ module.exports = {
       push.stderr.on("error",error=>{
         reject(error);
       });
-      push.stdout.on("data",data=>{
+      push.stdout.on("data",async data=>{
         data = data.toString();
         // if requires password
         if(data.search("Username") == 0){
@@ -139,5 +141,8 @@ module.exports = {
       const unassumer = spawn(git||"git",["update-index","--no-assume-unchanged",file],{cwd:repoPath});
       unassumer.on("close",()=>{res();});
     });
+  },
+  initiateRepo: (git,repo,remote)=>{
+    const repoPath = path.join(__dirname,"../data/repos/",repo);
   }
 }

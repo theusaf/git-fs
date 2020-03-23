@@ -1,6 +1,6 @@
 {
   "name": "git-fs",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A NodeJS Application to use Git as a filesystem",
   "main": "index.js",
   "scripts": {
