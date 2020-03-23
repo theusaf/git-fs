@@ -122,6 +122,19 @@ module.exports = {
   },
   hideFile: (git,repo,file)=>{ // removes and adds "assume unchanged"
     const repoPath = path.join(__dirname,"../data/repos/",repo);
+    if(fs.existsSync(path.join(repoPath,file)) && fs.lstatSync(path.join(repoPath,file)).isDirectory()){
+      return new Promise(function(resolve, reject) {
+        fs.readdir(path.join(repoPath,file),async (err,files)=>{
+          if(err){
+            reject(err);
+          }
+          for(let file2 of files){
+            await module.exports.hideFile(git,repo,path.join(file,file2));
+          }
+          resolve();
+        });
+      });;
+    }
     return new Promise((res,rej)=>{
       if(fs.existsSync(path.join(repoPath,file))){
         fs.unlink(path.join(repoPath,file),(err)=>{
