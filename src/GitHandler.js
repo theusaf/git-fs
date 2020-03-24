@@ -3,6 +3,7 @@ const path = require("path");
 const {spawn} = require("child_process");
 module.exports = {
   getRepos: ()=>{
+    console.log("getting repos from filesystem");
     return new Promise((res,rej)=>{
       fs.readdir(path.join(__dirname,"../data/repos"),{withFileTypes:true},(err,files)=>{
         if(err){
@@ -20,6 +21,7 @@ module.exports = {
     });
   },
   fetchChanges: (git,repo,passcb,pull)=>{
+    console.log("fetching new changes");
     const repoPath = path.join(__dirname,"../data/repos/",repo);
     return new Promise((res,rej)=>{
       if(!fs.existsSync(path.join(__dirname,"../data/repos/",repo))){
@@ -27,6 +29,7 @@ module.exports = {
       }
       const fetcher = spawn(git || "git",["fetch"],{cwd: repoPath});
       fetcher.stderr.on("data",err=>{
+        err=err.toString();
         rej(err);
       });
       fetcher.on("close",()=>{
@@ -34,8 +37,8 @@ module.exports = {
         let inf = [];
         let toDate = true;
         const changes = spawn(git || "git",[...((!pull && ["checkout"]) || ["pull","origin","master"])],{cwd: repoPath});
-        changes.stderr.on("data",err=>{rej(err)});
-        changes.on("error",err=>{rej(err)});
+        changes.stderr.on("data",err=>{if(!pull){}err=err.toString();rej(err)});
+        changes.on("error",err=>{err=err.toString();rej(err)});
         changes.stdout.on("data",data=>{
           data = data.toString();
           if(data.search("up to date with") != -1 && data[0].search(/[adm]/i) == -1){
@@ -77,11 +80,13 @@ module.exports = {
         });
       });
       fetcher.on("error",error=>{
+        error = error.toString();
         rej(error);
       });
     });
   },
   loadFile: (git,repo,file)=>{ // load a single file
+    console.log("loading files");
     const repoPath = path.join(__dirname,"../data/repos/",repo);
     return new Promise((res,rej)=>{
       const checkout = spawn(git||"git",["checkout",file],{cwd:repoPath});
@@ -95,12 +100,14 @@ module.exports = {
     });
   },
   uploadChanges: async (git,repo,userin)=>{ // push
+    console.log("uploading changes");
     const repoPath = path.join(__dirname,"../data/repos/",repo);
     let username = "";
     let password = "";
     return new Promise((resolve, reject)=>{
       const push = spawn(git||"git",["push"],{cwd:repoPath});
       push.stderr.on("error",error=>{
+        error=error.toString();
         reject(error);
       });
       push.stdout.on("data",async data=>{
@@ -125,6 +132,7 @@ module.exports = {
     });
   },
   hideFile: (git,repo,file)=>{ // removes and adds "assume unchanged"
+    console.log("hiding files");
     const repoPath = path.join(__dirname,"../data/repos/",repo);
     if(fs.existsSync(path.join(repoPath,file)) && fs.lstatSync(path.join(repoPath,file)).isDirectory()){
       return new Promise(function(resolve, reject) {
@@ -153,6 +161,7 @@ module.exports = {
     });
   },
   showFile: (git,repo,file)=>{ // removes "assume unchanged" status
+    console.log("showing files");
     const repoPath = path.join(__dirname,"../data/repos/",repo);
     return new Promise((res,rej)=>{
       const unassumer = spawn(git||"git",["update-index","--no-assume-unchanged",file],{cwd:repoPath});
@@ -177,6 +186,7 @@ module.exports = {
             });
           });
           remoter.on("error",err=>{
+            err=err.toString();
             rej(err);
           });
         });

@@ -47,6 +47,7 @@ window.addEventListener('load',()=>{
       }
     });
     function createRepo(){
+      delete window.createRepo;
       const name = document.getElementById("RepoName").value;
       const url = document.getElementById("RepoURL").value;
       let buffering = true;
