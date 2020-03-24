@@ -19,7 +19,7 @@ module.exports = {
       });
     });
   },
-  fetchChanges: (git,repo,passcb)=>{
+  fetchChanges: (git,repo,passcb,pull)=>{
     const repoPath = path.join(__dirname,"../data/repos/",repo);
     return new Promise((res,rej)=>{
       if(!fs.existsSync(path.join(__dirname,"../data/repos/",repo))){
@@ -32,8 +32,8 @@ module.exports = {
       fetcher.on("close",()=>{
         // checkout files, search for changes.
         let inf = [];
-        let toDate = false;
-        const changes = spawn(git || "git",["checkout"],{cwd: repoPath});
+        let toDate = true;
+        const changes = spawn(git || "git",[...((!pull && ["checkout"]) || ["pull","origin","master"])],{cwd: repoPath});
         changes.stderr.on("data",err=>{rej(err)});
         changes.on("error",err=>{rej(err)});
         changes.stdout.on("data",data=>{
@@ -166,7 +166,7 @@ module.exports = {
         initiator.on("close",()=>{
           const remoter = spawn(git||"git",["remote","add","origin",remote],{cwd: repoPath});
           remoter.on("close",()=>{
-            module.exports.fetchChanges(git,repo,passcb).then(()=>{
+            module.exports.fetchChanges(git,repo,passcb,true).then(()=>{
               res();
             }).catch(e=>{
               rej(e);
