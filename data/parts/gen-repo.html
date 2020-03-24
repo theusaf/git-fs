@@ -15,7 +15,7 @@
   h1 {
     height: 2rem;
   }
-  #RepoName {
+  .repo {
     height: 2rem;
     border: solid black 1px;
     background: #444;
@@ -23,9 +23,16 @@
     color: #999;
     font-size: 1.6rem;
   }
+  #RepoSubmitNew {
+    margin-top: 1.5rem;
+    height: 2.5rem;
+    width: 10rem;
+    border-radius: 1rem;
+  }
 </style>
-<div class="part center">
+<form class="part center" action="javascript:createRepo()">
+  <input disabled type="submit" style="display: none">
   <div class="spacer"></div>
   <h1>Create a Repository</h1>
-  <input type="text" id="RepoName" name="Repo-Name" value="" placeholder="Insert folder for repository">
-</div>
+  <input type="text" class="repo" id="RepoName" name="Repo-Name" value="" placeholder="Insert folder for repository">
+</form>

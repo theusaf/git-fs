@@ -155,7 +155,7 @@ module.exports = {
       unassumer.on("close",()=>{res();});
     });
   },
-  initiateRepo: (git,repo,remote)=>{
+  initiateRepo: (git,repo,remote,passcb)=>{
     const repoPath = path.join(__dirname,"../data/repos/",repo);
     return new Promise((res,rej)=>{
       if(fs.existsSync(repoPath)){
@@ -166,7 +166,11 @@ module.exports = {
         initiator.on("close",()=>{
           const remoter = spawn(git||"git",["remote","add","origin",remote],{cwd: repoPath});
           remoter.on("close",()=>{
-            res();
+            module.exports.fetchChanges(git,repo,passcb).then(()=>{
+              res();
+            }).catch(e=>{
+              rej(e);
+            });
           });
           remoter.on("error",err=>{
             rej(err);
