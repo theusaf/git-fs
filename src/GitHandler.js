@@ -47,6 +47,10 @@ module.exports = {
           }
         });
         changes.on("close",async ()=>{
+          if(pull){
+            toDate = true;
+            inf = [];
+          }
           if(toDate){
             // commit any changes
             if(inf.length){
