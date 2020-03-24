@@ -1,0 +1,31 @@
+<style type="text/css">
+  .part {
+    font-family: Helvetica, sans-serif;
+    height: 100%;
+  }
+  .center {
+    text-align: center;
+  }
+  .part * {
+    flex: 1;
+  }
+  .spacer {
+    height: calc(50% - 8rem);
+  }
+  h1 {
+    height: 2rem;
+  }
+  #RepoName {
+    height: 2rem;
+    border: solid black 1px;
+    background: #444;
+    width: 27rem;
+    color: #999;
+    font-size: 1.6rem;
+  }
+</style>
+<div class="part center">
+  <div class="spacer"></div>
+  <h1>Create a Repository</h1>
+  <input type="text" id="RepoName" name="Repo-Name" value="" placeholder="Insert folder for repository">
+</div>

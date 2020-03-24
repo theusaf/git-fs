@@ -30,18 +30,23 @@ window.addEventListener('load',()=>{
       },3000);
     });
   }else if(pageid.content == "main"){
+    let func;
     const frame = document.getElementById("mainscreen");
     GitHandler.getRepos().then(async repos=>{
       if(repos.length && !options.repository){
         // select repo
         frame.innerHTML = await loadPart("select-repo");
+        func = require(path.join(__dirname,"../../data/parts/js/select.js"));
       }else if(repos.length && options.repository){
         // load repo
         frame.innerHTML = await loadPart("load-repo");
+        func = require(path.join(__dirname,"../../data/parts/js/load.js"));
       }else{
         // create new repo
         frame.innerHTML = await loadPart("gen-repo");
+        func = require(path.join(__dirname,"../../data/parts/js/gen.js"));
       }
+      func();
     });
   }
 });
